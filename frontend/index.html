@@ -3,16 +3,80 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://tsuki-odyssey.fandom.com/es/load.php?lang=es&modules=site.styles&only=styles&skin=fandomdesktop"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://tsuki-odyssey.fandom.com/es/wikia.php?controller=ThemeApi&method=themeVariables"
-    />
-    <title>Tsukin't</title>
+    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="./styles/root.css" />
+    <link rel="stylesheet" href="./styles/form.css" />
+    <link rel="stylesheet" href="./styles/table.css" />
+    <title>Pumba Skins</title>
   </head>
-  <body></body>
+  <body>
+    <header>
+      <div class="header_container">
+        <img
+          src="./assets/pumba_thumbnail.png"
+          alt="Logo de la pagina"
+          id="logo"
+        />
+        <h1>Pumba Skins</h1>
+      </div>
+      <nav class="navbar">
+        <ul>
+          <li>
+            <a href="./index.html">Inicio</a>
+          </li>
+          <li><a href="./weapons/index.html">Armas</a></li>
+          <li><a href="./skins/index.html">Skins</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="container">
+      <div class="box">
+        <h2>Jugadores</h2>
+        <br>
+        <table>
+          <tr>
+            <th>Nombre</th>
+            <th>Bando</th>
+            <th>Nacionalidad</th>
+            <th>Edad</th>
+          </tr>
+          <tr>
+            <td>ElChancho</td>
+            <td>Antiterrorista</td>
+            <td>Taiwán</td>
+            <td>25</td>
+          </tr>
+          <tr>
+            <td>ElGusanito</td>
+            <td>Terrorista</td>
+            <td>Argentino</td>
+            <td>25</td>
+          </tr>
+          <tr>
+            <td>ElQuique</td>
+            <td>Terrorista</td>
+            <td>Perú</td>
+            <td>24</td>
+          </tr>
+        </table>
+      </div>
+      <div class="box">
+        <h2>Agregar un jugador</h2>
+        <form class="form_player">
+          <label for="pName">Nombre del jugador:</label>
+          <input type="text" id="pName" />
+          <label for="pType">Bando:</label>
+          <select name="pType">
+            <option value="tt">Terrorista</option>
+            <option value="ct">Anti Terrorista</option>
+          </select>
+          <label for="pOrigin">Nacionalidad:</label>
+          <input type="text" id="pOrigin" />
+          <label for="pAge">Edad:</label>
+          <input type="text" id="pAge" />
+        </form>
+      </div>
+    </section>
+  </body>
 </html>

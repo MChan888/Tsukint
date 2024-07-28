@@ -21,13 +21,13 @@
       </div>
       <nav class="navbar">
         <ul>
-          <a href="./index.html">
+          <a href="/">
             <li>Inicio</li>
           </a>
-          <a href="./weapons/index.html">
+          <a href="/weapons">
             <li>Armas</li>
           </a>
-          <a href="./skins/index.html">
+          <a href="/skins/">
             <li>Skins</li>
           </a>
         </ul>
@@ -38,30 +38,12 @@
       <div class="box">
         <h2>Jugadores</h2>
         <br />
-        <table>
+        <table id="player_table">
           <tr>
             <th>Nombre</th>
             <th>Bando</th>
             <th>Nacionalidad</th>
             <th>Edad</th>
-          </tr>
-          <tr>
-            <td>ElChancho</td>
-            <td>Antiterrorista</td>
-            <td>Taiwán</td>
-            <td>25</td>
-          </tr>
-          <tr>
-            <td>ElGusanito</td>
-            <td>Terrorista</td>
-            <td>Argentino</td>
-            <td>25</td>
-          </tr>
-          <tr>
-            <td>ElQuique</td>
-            <td>Terrorista</td>
-            <td>Perú</td>
-            <td>24</td>
           </tr>
         </table>
       </div>
@@ -78,9 +60,30 @@
           <label for="pOrigin">Nacionalidad:</label>
           <input type="text" id="pOrigin" />
           <label for="pAge">Edad:</label>
-          <input type="text" id="pAge" />
+          <input type="number" id="pAge" />
         </form>
       </div>
     </section>
   </body>
+  <script src="./js/url.js"></script>
+  <script src="./js/table.js"></script>
+  
+  <!-- TODO: Hay que sacar esto y hacer el fetch -->
+  <script>
+    addRowToTable(
+      "ElChancho",
+      "Antiterrorista",
+      "Taiwán",
+      "25",
+      generatePlayerUrl(1)
+    );
+    addRowToTable(
+      "ElGusanito",
+      "Terrorista",
+      "Argentina",
+      "25",
+      generatePlayerUrl(2)
+    );
+    addRowToTable("ElQuique", "Terrorista", "Perú", "24", generatePlayerUrl(3));
+  </script>
 </html>

@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../styles/main.css" />
     <link rel="stylesheet" href="../styles/root.css" />
+    <link rel="stylesheet" href="../styles/form.css" />
     <title>Armas</title>
   </head>
   <body>
     <header>
       <div class="header_container">
         <img
-          src="./assets/pumba_thumbnail.png"
+          src="../assets/pumba_thumbnail.png"
           alt="Logo de la pagina"
           id="logo"
         />
@@ -19,17 +20,41 @@
       </div>
       <nav class="navbar">
         <ul>
-          <a href="../index.html">
+          <a href="/">
             <li>Inicio</li>
           </a>
-          <a href="./index.html">
+          <a href="/weapons">
             <li>Armas</li>
           </a>
-          <a href="../skins/index.html">
+          <a href="/skins">
             <li>Skins</li>
           </a>
         </ul>
       </nav>
     </header>
+
+    <section class="container">
+      <div class="box">
+        <h2>Agregar un arma</h2>
+        <form class="form_player">
+          <label for="wName">Nombre del arma:</label>
+          <input type="text" id="wName" />
+          <label for="wType">Tipo:</label>
+          <select name="wType">
+            <option value="rifle">Rifle</option>
+            <option value="submachinegun">Subfusil</option>
+            <option value="sniper">Francotirador</option>
+            <option value="melee">Cuchillo</option>
+          </select>
+          <label for="wOrigin">Nacionalidad:</label>
+          <input type="text" id="wOrigin" />
+          <label for="wFloat">Durabilidad:</label>
+          <input type="number" id="wFloat" />
+          <label for="wPrice">Precio:</label>
+          <input type="number" id="wPrice" />
+        </form>
+      </div>
+    </section>
   </body>
+  <script src="../js/url.js"></script>
 </html>

@@ -16,17 +16,16 @@ class Weapon(db.Model):
     wType = db.Column(db.String, nullable=False)
     wOrigin = db.Column(db.String, nullable=False)
 
-class Collection(db.Model):
-    __tablename__ = 'collections'
-    cId = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    cName = db.Column(db.String, nullable=False)
-
 class Skin(db.Model):
     __tablename__ = 'skins'
     sId = db.Column(db.Integer, primary_key=True, autoincrement=True)
     sName = db.Column(db.String, nullable=False)
     wId = db.Column(db.Integer, db.ForeignKey('weapons.wId'))
     sMPrice = db.Column(db.Integer, nullable=False)
-    sFloat = db.Column(db.String, nullable=False)
-    pId = db.Column(db.Integer, db.ForeignKey('players.pId'))
-    cId = db.Column(db.Integer, db.ForeignKey('collections.cId'))
+    sFloat = db.Column(db.Integer, nullable=False)
+
+class SkinModel(db.Model):
+    __tablename__ = 'skinmodel'
+    modelId = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    modelName = db.Column(db.String, nullable=False)
+    wId = db.Column(db.Integer, db.ForeignKey('weapons.wId'))

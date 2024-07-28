@@ -1,6 +1,7 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+import random
 
 db = SQLAlchemy()
 
@@ -14,7 +15,7 @@ def create_app():
     CORS(app)
 
     with app.app_context():
-        from models import Weapon
+        from models import Weapon, Skin, SkinModel
         db.create_all()
 
         weapons = [
@@ -31,11 +32,59 @@ def create_app():
                 db.session.add(Weapon(**weapon))
 
         db.session.commit()
+    
     @app.route('/api/weapons', methods=['GET'])
     def get_weapons():
         weapons = Weapon.query.all()
         weapons_list = [{"wId": weapon.wId, "wName": weapon.wName, "wType": weapon.wType, "wPrice": weapon.wPrice, "wOrigin": weapon.wOrigin} for weapon in weapons]
         return jsonify(weapons_list)
+
+    @app.route('/api/player/<id>', methods=['POST'])
+    def add_player(id):
+        return
+
+    @app.route('/api/player/<id>', methods=['GET'])
+    def show_players():
+        return
+
+    @app.route('/api/player/<id>', methods=['PUT'])
+    def edit_player():
+        return
+
+    @app.route('/api/player/<id>', methods=['DELETE'])
+    def delete_player():
+        return
+
+    # ---------------------------SKIN MODELS-------------------------------------
+    # Creates skin model
+    @app.route('/api/skins/model', methods=['POST'])
+    def create_skin_model():
+        data = request.get_json()
+
+        if not data or 'modelName' not in data or 'wId' not in data:
+            return jsonify({"error": "Invalid input"}), 400
+        
+        weapon = Weapon.query.get(data['wId'])
+
+        if not weapon:
+            return jsonify({"error": "Weapon not found"}), 404
+        
+        new_skin_model = SkinModel(
+            modelName=data['modelName'],
+            wId=data['wId'],
+        )
+
+        db.session.add(new_skin_model)
+        db.session.commit()
+
+        return jsonify({
+            "modelName": new_skin_model.modelName,
+            "wId": new_skin_model.wId,
+        }), 201
+
+
+    
+    # ---------------------------SKIN MODELS-------------------------------------
 
     return app
 

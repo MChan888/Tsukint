@@ -39,6 +39,10 @@ ul li:hover {
     transition-duration: 0.5s;
 }
 
+button {
+  color: black;
+}
+
 .header_container {
   padding: 0;
   height: 75%;

@@ -24,5 +24,11 @@ label {
     align-items: center;
 }
 
+.search_input_container {
+    margin-top: 0.5vw;
+    width: 50%;
+    display: flex;
+}
+
 
 

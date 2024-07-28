@@ -1,59 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../styles/main.css" />
-    <link rel="stylesheet" href="../styles/root.css" />
-    <link rel="stylesheet" href="../styles/form.css" />
-    <title>Skins</title>
-  </head>
-  <body>
-    <header>
-      <div class="header_container">
-        <img
-          src="../assets/pumba_thumbnail.png"
-          alt="Logo de la pagina"
-          id="logo"
-        />
-        <h1>Pumba Skins</h1>
-      </div>
-      <nav class="navbar">
-        <ul>
-          <a href="/">
-            <li>Inicio</li>
-          </a>
-          <a href="/weapons">
-            <li>Armas</li>
-          </a>
-          <a href="/skins">
-            <li>Skins</li>
-          </a>
-        </ul>
-      </nav>
-    </header>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="../styles/main.css" />
+		<link rel="stylesheet" href="../styles/root.css" />
+		<link rel="stylesheet" href="../styles/form.css" />
+		<title>Skins</title>
+	</head>
+	<body>
+		<header>
+			<div class="header_container">
+				<img src="../assets/pumba_thumbnail.png" alt="Logo de la pagina" id="logo" />
+				<h1>Pumba Skins</h1>
+			</div>
+			<nav class="navbar">
+				<ul>
+					<a href="/">
+						<li>Inicio</li>
+					</a>
+					<a href="/weapons">
+						<li>Armas</li>
+					</a>
+					<a href="/skins">
+						<li>Skins</li>
+					</a>
+				</ul>
+			</nav>
+		</header>
 
-    <section class="container">
-      <div class="box">
-        <h2>Agregar un skin</h2>
-        <form class="form_player">
-          <label for="wName">Nombre del arma:</label>
-          <input type="text" id="wName" />
-          <label for="wType">Tipo:</label>
-          <select name="wType">
-            <option value="rifle">Rifle</option>
-            <option value="submachinegun">Subfusil</option>
-            <option value="sniper">Francotirador</option>
-            <option value="melee">Cuchillo</option>
-          </select>
-          <label for="wOrigin">Nacionalidad:</label>
-          <input type="text" id="wOrigin" />
-          <label for="wFloat">Durabilidad:</label>
-          <input type="number" id="wFloat" />
-          <label for="wPrice">Precio:</label>
-          <input type="number" id="wPrice" />
-        </form>
-      </div>
-    </section>
-  </body>
+		<section class="container">
+			<div class="box" id="skin_info">
+				<h2>Agregar un skin</h2>
+				<form class="form_player">
+					<label for="wName">Nombre del skin:</label>
+					<input type="text" id="wName" />
+					<label for="wType">Tipo:</label>
+					<select name="wType">
+						<option value="rifle">Rifle</option>
+						<option value="submachinegun">Subfusil</option>
+						<option value="sniper">Francotirador</option>
+						<option value="melee">Cuchillo</option>
+					</select>
+					<label for="wType">Colección:</label>
+					<select name="wType">
+						<option value="rifle">Snakebite</option>
+						<option value="submachinegun">Hydra</option>
+						<option value="sniper">Bravo</option>
+					</select>
+				</form>
+			</div>
+		</section>
+	</body>
 </html>

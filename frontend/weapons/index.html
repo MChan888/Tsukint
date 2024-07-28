@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../styles/main.css" />
     <link rel="stylesheet" href="../styles/root.css" />
-    <link rel="stylesheet" href="../styles/form.css" />
+    <link rel="stylesheet" href="../styles/table.css" />
     <title>Armas</title>
   </head>
   <body>
@@ -35,26 +35,19 @@
 
     <section class="container">
       <div class="box">
-        <h2>Agregar un arma</h2>
-        <form class="form_player">
-          <label for="wName">Nombre del arma:</label>
-          <input type="text" id="wName" />
-          <label for="wType">Tipo:</label>
-          <select name="wType">
-            <option value="rifle">Rifle</option>
-            <option value="submachinegun">Subfusil</option>
-            <option value="sniper">Francotirador</option>
-            <option value="melee">Cuchillo</option>
-          </select>
-          <label for="wOrigin">Nacionalidad:</label>
-          <input type="text" id="wOrigin" />
-          <label for="wFloat">Durabilidad:</label>
-          <input type="number" id="wFloat" />
-          <label for="wPrice">Precio:</label>
-          <input type="number" id="wPrice" />
-        </form>
+        <h2>Armas</h2>
+        <br>
+        <table id="weapons_table">
+          <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Origen</th>
+            <th>Precio</th>
+          </tr>
+        </table>
       </div>
     </section>
   </body>
   <script src="../js/url.js"></script>
+  <script src="../js/weapon.js"></script>
 </html>

@@ -5,7 +5,7 @@ const fetchWeaponInfo = async () => {
 			throw new Error("Error in response");
 		}
 		const data = await response.json();
-		return console.log(data);
+		return data;
 	} catch (e) {
 		console.error("Problema:", e);
 		throw error;
@@ -52,5 +52,8 @@ function displayWeapons(weapInfo) {
 	}
 }
 
-const weaponInfo = fetchWeaponInfo();
-displayWeapons(weaponInfo);
+
+fetchWeaponInfo().then(res => displayWeapons(res)).catch(e => {
+	console.error(e);
+	throw new Error("ERROR EN EL FETCH DE ARMAS")
+})

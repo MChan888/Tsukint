@@ -1,77 +1,98 @@
 // Function to get the player ID from the URL
 function getPlayerIdFromUrl() {
-    let searchParams = new URLSearchParams(window.location.search);
-    return searchParams.get("id")
+	let searchParams = new URLSearchParams(window.location.search);
+	return searchParams.get("id");
 }
 
-function addRowToTable(name, type, origin, price, elementId) {
-    var table = document.getElementById(elementId);
+function mapFloat(float){
+	switch(float){
+		case 1:
+			return "Deplorable"
+		case 2:
+			return "Bastante Desgastado"
+		case 4:
+			return "Casi Nuevo"
+		case 5:
+			return "Recién Fabricado"
+		default:
+			return "Algo Desgastado"
+	}
+}
 
-    var newRow = table.insertRow();
+function addRowToTable(name, weaponName, marketPrice, float, elementId) {
+	var table = document.getElementById(elementId);
 
-    var nameCell = newRow.insertCell(0);
-    var typeCell = newRow.insertCell(1);
-    var originCell = newRow.insertCell(2);
-    var priceCell = newRow.insertCell(3);
+	var newRow = table.insertRow();
 
-    nameCell.textContent = name;
-    typeCell.textContent = type;
-    originCell.textContent = origin;
-    priceCell.textContent = price;
+	var nameCell = newRow.insertCell(0);
+	var wNameCell = newRow.insertCell(1);
+	var sMPriceCell = newRow.insertCell(2);
+	var floatCell = newRow.insertCell(3);
+
+	nameCell.textContent = name;
+	wNameCell.textContent = weaponName;
+	sMPriceCell.textContent = marketPrice;
+	floatCell.textContent = float;
 }
 
 // Function to fetch player information
 function fetchPlayerInfo(playerId) {
-    // For demonstration, we'll use a placeholder player data
-    // In a real-world scenario, you would fetch this data from a server
+	// For demonstration, we'll use a placeholder player data
+	// In a real-world scenario, you would fetch this data from a server
 
-    const weapons2 = [
-        {wName: "AWP", wType: "sniper", wPrice: 4750, wOrigin: "UK", pId: 1},
-        {wName: "M4A4", wType: "rifle", wPrice: 3100, wOrigin: "RUS", pId: 1},
-    ]
-    const weapons = [
-        {wName: "AWP", wType: "sniper", wPrice: 4750, wOrigin: "UK", pId: 1},
-        {wName: "M4A4", wType: "rifle", wPrice: 3100, wOrigin: "RUS", pId: 2},
-        {wName: "AK47", wType: "rifle", wPrice: 2700, wOrigin: "US", pId: 3},
-    ]
+	const weapons = [
+		{ wName: "AWP", wType: "scopedRifle", wPrice: 4750, wOrigin: "UK", pId: 1 },
+		{ wName: "M4A4", wType: "rifle", wPrice: 3100, wOrigin: "US", pId: 2 },
+		{ wName: "AK47", wType: "rifle", wPrice: 2700, wOrigin: "RUS", pId: 3 },
+		{ wName: "Karambit", wType: "melee", wPrice: 9999, wOrigin: "ARG", pId: 4 },
+		{ wName: "MP9", wType: "submachinegun", wPrice: 1350, wOrigin: "US", pId: 5 },
+	];
+	const skins1 = [
+		{ sName: "Asiimov", sType: "sniper", sMPrice: 29.99, sFloat: 1, pId: 1, ...weapons[1] },
+		{ sName: "Asiimov", sType: "rifle", sMPrice: 3100, sFloat: 5, pId: 1, ...weapons[3] },
+	];
+	const skins2 = [
+		{ sName: "Neon Revolution", sType: "rifle", sMPrice: 25.99 , sFloat: 3, pId: 2, ...weapons[3] },
+		{ sName: "Neo Noir", sType: "sniper", sMPrice: 99.99, sFloat: 2, pId: 2, ...weapons[1] },
+	];
+	const skins3 = [];
 
-    const players = {
-        "1": { pName: "ElChancho", pAge: 25, pOrigin: "Taiwan", pType: "Antiterrorista", weapons: weapons2},
-        "2": { pName: "ElGusanito", pAge: 25, pOrigin: "Argentina", pType: "Terrorista",  weapons: [weapons[1]] },
-        "3": { pName: "ElQuique", pAge: 24, pOrigin: "Perú", pType: "Terrorista",  weapons: [weapons[2]] },
-        // Add more player data as needed
-    };
+	const players = {
+		1: { pName: "ElChancho", pAge: 25, pOrigin: "Taiwan", pType: "Antiterrorista", skins: skins1 },
+		2: { pName: "ElGusanito", pAge: 25, pOrigin: "Argentina", pType: "Terrorista", skins: skins2 },
+		3: { pName: "ElQuique", pAge: 24, pOrigin: "Perú", pType: "Terrorista", skins: skins3 },
+	};
 
-    return players[playerId];
+	return players[playerId];
 }
 
 // Function to display player information
 function displayPlayerInfo(playerInfo) {
-    const playerInfoDiv = document.getElementById('player_info');
-    if (playerInfo) {
-        playerInfoDiv.innerHTML = `
+	const playerInfoDiv = document.getElementById("player_info");
+	if (playerInfo) {
+		playerInfoDiv.innerHTML = `
             <p>Nombre: ${playerInfo.pName}</p>
             <p>Bando: ${playerInfo.pType}</p>
             <p>Nacionalidad: ${playerInfo.pOrigin}</p>
             <p>Edad: ${playerInfo.pAge}</p>
         `;
-    } else {
-        playerInfoDiv.innerHTML = `<p>No se encuentra el jugador</p>`;
-    }
+	} else {
+		playerInfoDiv.innerHTML = `<p>No se encuentra el jugador</p>`;
+	}
 }
 
 // Function to display player information
-function displayPlayerWeapons(playerInfo) {
-    if (playerInfo) {
-        playerInfo.weapons.forEach(element => {
-            addRowToTable(element.wName, element.wType, element.wOrigin, element.wPrice, 'weapons_table')
-        });
-    }
+function displayPlayerWeaponSkins(playerInfo) {
+	console.log(playerInfo);
+	if (playerInfo) {
+		playerInfo.skins.forEach((element) => {
+			addRowToTable(element.sName, element.wName , element.sMPrice, mapFloat(element.sFloat), "weapons_table");
+		});
+	}
 }
-
 
 // Main execution
 const playerId = getPlayerIdFromUrl();
 const playerInfo = fetchPlayerInfo(playerId);
 displayPlayerInfo(playerInfo);
-displayPlayerWeapons(playerInfo)
+displayPlayerWeaponSkins(playerInfo);

@@ -1,13 +1,16 @@
-function fetchWeaponInfo() {
-	const weapons = [
-		{ wName: "AWP", wType: "scopedRifle", wPrice: 4750, wOrigin: "UK", pId: 1 },
-		{ wName: "M4A4", wType: "rifle", wPrice: 3100, wOrigin: "US", pId: 2 },
-		{ wName: "AK47", wType: "rifle", wPrice: 2700, wOrigin: "RUS", pId: 3 },
-		{ wName: "Karambit", wType: "melee", wPrice: 9999, wOrigin: "ARG", pId: 4 },
-		{ wName: "MP9", wType: "submachinegun", wPrice: 1350, wOrigin: "US", pId: 5 },
-	];
-	return weapons;
-}
+const fetchWeaponInfo = async () => {
+	try {
+		const response = await fetch("http://localhost:5000/api/weapons");
+		if (!response.ok) {
+			throw new Error("Error in response");
+		}
+		const data = await response.json();
+		return console.log(data);
+	} catch (e) {
+		console.error("Problema:", e);
+		throw error;
+	}
+};
 
 function mapWName(wName) {
 	switch (wName) {

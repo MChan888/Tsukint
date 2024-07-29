@@ -65,11 +65,23 @@ def create_app():
             "pAge":new_player.pAge
         }), 201
 
-    @app.route('/api/player/<int:id>', methods=["GET"])
-    def get_players():
+    @app.route('/api/player', methods=["GET"])
+    def get_all_players():
         players = Player.query.all()
         player_list = [{"pId": player.pId, "pName": player.pName, "pType": player.pType, "pOrigin":player.pOrigin, "pAge":player.pAge} for player in players]
         return jsonify(player_list)
+    
+    @app.route('/api/player/<int:id>', methods=["GET"])
+    def get_player(id):
+        player = Player.query.get(id)
+        return jsonify({
+            "pId": player.pId, 
+            "pName": player.pName, 
+            "pType": player.pType, 
+            "pOrigin":player.pOrigin, 
+            "pAge":player.pAge
+        })
+
 
     @app.route('/api/player/<int:id>', methods=["PUT"])
     def edit_player(id):
@@ -78,13 +90,13 @@ def create_app():
         if not player_data or "pName" not in player_data or "pType" not in player_data or "pOrigin" not in player_data or "pAge" not in player_data:
             return jsonify({"Error": "No deje campos vacíos"}), 400
         
-        person = Player.query.get(id)
+        player = Player.query.get(id)
             
-        if person:
-            person.pName = player_data["pName"]
-            person.pType = player_data["pType"]
-            person.pOrigin = player_data["pOrigin"]
-            person.pAge = player_data["pAge"]
+        if player:
+            player.pName = player_data["pName"]
+            player.pType = player_data["pType"]
+            player.pOrigin = player_data["pOrigin"]
+            player.pAge = player_data["pAge"]
             
             db.session.commit()
             return jsonify({"Mensaje": "La información del jugador ha sido actualizada"}), 200
@@ -95,13 +107,17 @@ def create_app():
     @app.route('/api/player/<int:id>', methods=['DELETE'])
     def delete_player(id):
         player = Player.query.get(id)
-        
+        skins = Skin.query.filter_by(pId=id).all()
+            
         if player:
+            for skin in skins:
+                db.session.delete(skin)
+                db.session.commit()
             db.session.delete(player)
             db.session.commit()
-            return jsonify({'Jugador eliminado.'}), 200
+            return jsonify({"error":f'Persona con ID igual {id}'}), 200
         else:
-            return jsonify({'Error: no se ha encontrado al jugador seleccionado.'}), 404
+            return jsonify({"error":f'no se ha encontrado a un jugador con ID {id}'}), 404
 
     # ---------------------------SKIN MODELS-------------------------------------
     # Creates skin model

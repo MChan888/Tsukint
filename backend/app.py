@@ -48,20 +48,24 @@ def create_app():
         
         player = Player.query.get(player_data['pId'])
 
-        if not player:
-            return jsonify({"Error": "Persona no encontrada"}), 404
+        """if not player:
+            return jsonify({"Error": "Persona no encontrada"}), 404"""
         
         new_player = Player(
             pName=player_data['pName'],
-            pId=player_data['pId'],
+            pType=player_data['pType'],
+            pOrigin=player_data['pOrigin'],
+            pAge=player_data['pAge']
         )
 
-        db.session.add(new_skin_model)
+        db.session.add(new_player)
         db.session.commit()
 
         return jsonify({
-            "modelName": new_skin_model.modelName,
-            "wId": new_skin_model.wId,
+            "pName": new_player.pName,
+            "pType": new_player.pType,
+            "pOrigin":new_player.pOrigin,
+            "pAge":new_player.pAge
         }), 201
 
     @app.route('/api/player/<int:id>', methods=["GET"])

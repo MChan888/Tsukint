@@ -1,4 +1,3 @@
-// Function to get the player ID from the URL
 function getPlayerIdFromUrl() {
 	let searchParams = new URLSearchParams(window.location.search);
 	return searchParams.get("id");
@@ -35,10 +34,10 @@ function addRowToTable(name, weaponName, marketPrice, float, elementId) {
 	floatCell.textContent = float;
 }
 
-// Function to fetch player information
-function fetchPlayerInfo(playerId) {
+function fetchPlayerMockInfo(playerId) {
 	// For demonstration, we'll use a placeholder player data
 	// In a real-world scenario, you would fetch this data from a server
+
 
 	const weapons = [
 		{ wName: "AWP", wType: "scopedRifle", wPrice: 4750, wOrigin: "UK", pId: 1 },
@@ -65,6 +64,23 @@ function fetchPlayerInfo(playerId) {
 
 	return players[playerId];
 }
+
+const fetchPlayerSkinsInfo = async () => {
+	const id = getPlayerIdFromUrl()
+	try {
+		const response = await fetch("http://localhost:5000/api/skins/"+id);
+		if (!response.ok) {
+			throw new Error("Error in response");
+		}
+		const data = await response.json();
+		return data;
+	} catch (e) {
+		console.error("Problema:", e);
+		throw error;
+	}
+}
+
+
 
 const createSkinForPlayer = async () => {
 	const id = getPlayerIdFromUrl()
@@ -122,6 +138,7 @@ function displayPlayerWeaponSkins(playerInfo) {
 
 // Main execution
 const playerId = getPlayerIdFromUrl();
-const playerInfo = fetchPlayerInfo(playerId);
+const playerInfo = fetchPlayerMockInfo(playerId);
+const playerSkins = fetchPlayerSkinsInfo();
 displayPlayerInfo(playerInfo);
-displayPlayerWeaponSkins(playerInfo);
+displayPlayerWeaponSkins(playerSkins);

@@ -34,35 +34,20 @@ function addRowToTable(name, weaponName, marketPrice, float, elementId) {
 	floatCell.textContent = float;
 }
 
-function fetchPlayerMockInfo(playerId) {
-	// For demonstration, we'll use a placeholder player data
-	// In a real-world scenario, you would fetch this data from a server
-
-	const weapons = [
-		{ wName: "AWP", wType: "scopedRifle", wPrice: 4750, wOrigin: "UK", pId: 1 },
-		{ wName: "M4A4", wType: "rifle", wPrice: 3100, wOrigin: "US", pId: 2 },
-		{ wName: "AK47", wType: "rifle", wPrice: 2700, wOrigin: "RUS", pId: 3 },
-		{ wName: "Karambit", wType: "melee", wPrice: 9999, wOrigin: "ARG", pId: 4 },
-		{ wName: "MP9", wType: "submachinegun", wPrice: 1350, wOrigin: "US", pId: 5 },
-	];
-	const skins1 = [
-		{ sName: "Asiimov", sType: "sniper", sMPrice: 29.99, sFloat: 1, pId: 1, ...weapons[1] },
-		{ sName: "Asiimov", sType: "rifle", sMPrice: 3100, sFloat: 5, pId: 1, ...weapons[3] },
-	];
-	const skins2 = [
-		{ sName: "Neon Revolution", sType: "rifle", sMPrice: 25.99, sFloat: 3, pId: 2, ...weapons[3] },
-		{ sName: "Neo Noir", sType: "sniper", sMPrice: 99.99, sFloat: 2, pId: 2, ...weapons[1] },
-	];
-	const skins3 = [];
-
-	const players = {
-		1: { pName: "ElChancho", pAge: 25, pOrigin: "Taiwan", pType: "ct", skins: skins1 },
-		2: { pName: "ElGusanito", pAge: 25, pOrigin: "Argentina", pType: "tt", skins: skins2 },
-		3: { pName: "ElQuique", pAge: 24, pOrigin: "Perú", pType: "tt", skins: skins3 },
-	};
-
-	return players[playerId];
-}
+const fetchPlayerInfo = async () => {
+	const id = getPlayerIdFromUrl();
+	try {
+		const response = await fetch("http://localhost:5000/api/player/" + id);
+		if (!response.ok) {
+			throw new Error("Error in response");
+		}
+		const data = await response.json();
+		return data;
+	} catch (e) {
+		console.error("Problema:", e);
+		throw error;
+	}
+};
 
 const fetchPlayerSkinsInfo = async () => {
 	const id = getPlayerIdFromUrl();
@@ -153,14 +138,14 @@ function displayPlayerWeaponSkins(playerInfo) {
 }
 
 const modifyPlayerInfo = async () => {
-	const id = getPlayerIdFromUrl()
+	const id = getPlayerIdFromUrl();
 	const pName = document.getElementById("pName");
 	const pType = document.getElementById("pType");
 	const pOrigin = document.getElementById("pOrigin");
 	const pAge = document.getElementById("pAge");
 
-	await fetch('http://localhost:5000/api/player/'+id, {
-		method: 'PUT',
+	await fetch("http://localhost:5000/api/player/" + id, {
+		method: "PUT",
 		headers: {
 			"Content-Type": "application/json",
 		},
@@ -168,21 +153,25 @@ const modifyPlayerInfo = async () => {
 			pName: pName.value,
 			pType: pType.value,
 			pOrigin: pOrigin.value,
-			pAge: pAge.value
+			pAge: pAge.value,
 		}),
-	}).catch(err =>{
+	}).catch((err) => {
 		console.error(err);
 		throw new Error("Error al editar el jugador");
-	})
+	});
 };
 
 // Main execution
 const playerId = getPlayerIdFromUrl();
-const playerInfo = fetchPlayerMockInfo(playerId);
 fetchPlayerSkinsInfo()
 	.then((res) => displayPlayerWeaponSkins(res))
 	.catch((e) => {
 		console.error(e);
 		throw new Error("ERROR EN EL FETCH DE SKINS");
 	});
-displayPlayerInfo(playerInfo);
+fetchPlayerInfo()
+	.then((res) => displayPlayerInfo(res))
+	.catch((e) => {
+		console.error(e);
+		throw new Error("ERROR EN EL FETCH DE PLAYER INFO");
+	});

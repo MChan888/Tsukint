@@ -69,13 +69,13 @@ def create_app():
         if not player_data or "pName" not in player_data or "pType" not in player_data or "pOrigin" not in player_data or "pAge" not in player_data:
             return jsonify({"Error": "No deje campos vacíos"}), 400
         
-        person = Player.query.get(id)
+        player = Player.query.get(id)
             
-        if person:
-            person.pName = player_data["pName"]
-            person.pType = player_data["pType"]
-            person.pOrigin = player_data["pOrigin"]
-            person.pAge = player_data["pAge"]
+        if player:
+            player.pName = player_data["pName"]
+            player.pType = player_data["pType"]
+            player.pOrigin = player_data["pOrigin"]
+            player.pAge = player_data["pAge"]
             
             db.session.commit()
             return jsonify({"Mensaje": "La información del jugador ha sido actualizada"}), 200

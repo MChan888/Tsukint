@@ -1,89 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./styles/main.css" />
-    <link rel="stylesheet" href="./styles/root.css" />
-    <link rel="stylesheet" href="./styles/form.css" />
-    <link rel="stylesheet" href="./styles/table.css" />
-    <title>Pumba Skins</title>
-  </head>
-  <body>
-    <header>
-      <div class="header_container">
-        <img
-          src="./assets/pumba_thumbnail.png"
-          alt="Logo de la pagina"
-          id="logo"
-        />
-        <h1>Pumba Skins</h1>
-      </div>
-      <nav class="navbar">
-        <ul>
-          <a href="/">
-            <li>Inicio</li>
-          </a>
-          <a href="/weapons">
-            <li>Armas</li>
-          </a>
-          <a href="/skins/">
-            <li>Skins</li>
-          </a>
-        </ul>
-      </nav>
-    </header>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./styles/main.css" />
+		<link rel="stylesheet" href="./styles/root.css" />
+		<link rel="stylesheet" href="./styles/form.css" />
+		<link rel="stylesheet" href="./styles/table.css" />
+		<title>Pumba Skins</title>
+	</head>
+	<body>
+		<header>
+			<div class="header_container">
+				<img src="./assets/pumba_thumbnail.png" alt="Logo de la pagina" id="logo" />
+				<h1>Pumba Skins</h1>
+			</div>
+			<nav class="navbar">
+				<ul>
+					<a href="/">
+						<li>Inicio</li>
+					</a>
+					<a href="/weapons">
+						<li>Armas</li>
+					</a>
+					<a href="/skins/">
+						<li>Skins</li>
+					</a>
+				</ul>
+			</nav>
+		</header>
 
-    <section class="container">
-      <div class="box">
-        <h2>Jugadores</h2>
-        <br />
-        <table id="player_table">
-          <tr>
-            <th>Nombre</th>
-            <th>Bando</th>
-            <th>Nacionalidad</th>
-            <th>Edad</th>
-          </tr>
-        </table>
-      </div>
-      <div class="box">
-        <h2>Agregar un jugador</h2>
-        <form class="form_player">
-          <label for="pName">Nombre del jugador:</label>
-          <input type="text" id="pName" />
-          <label for="pType">Bando:</label>
-          <select name="pType">
-            <option value="tt">Terrorista</option>
-            <option value="ct">Anti Terrorista</option>
-          </select>
-          <label for="pOrigin">Nacionalidad:</label>
-          <input type="text" id="pOrigin" />
-          <label for="pAge">Edad:</label>
-          <input type="number" id="pAge" />
-        </form>
-      </div>
-    </section>
-  </body>
-  <script src="./js/url.js"></script>
-  <script src="./js/table.js"></script>
-  
-  <!-- TODO: Hay que sacar esto y hacer el fetch -->
-  <script>
-    addRowToTable(
-      "ElChancho",
-      "Antiterrorista",
-      "Taiwán",
-      "25",
-      generatePlayerUrl(1)
-    );
-    addRowToTable(
-      "ElGusanito",
-      "Terrorista",
-      "Argentina",
-      "25",
-      generatePlayerUrl(2)
-    );
-    addRowToTable("ElQuique", "Terrorista", "Perú", "24", generatePlayerUrl(3));
-  </script>
+		<section class="container">
+			<div class="box">
+				<h2>Jugadores</h2>
+				<br />
+				<table id="player_table">
+					<tr>
+						<th>Nombre</th>
+						<th>Bando</th>
+						<th>Nacionalidad</th>
+						<th>Edad</th>
+					</tr>
+				</table>
+			</div>
+			<div class="box">
+				<h2>Agregar un jugador</h2>
+				<form class="form_player">
+					<label for="pName">Nombre del jugador:</label>
+					<input type="text" id="pName" />
+					<label for="pType">Bando:</label>
+					<select name="pType">
+						<option value="tt">Terrorista</option>
+						<option value="ct">Anti Terrorista</option>
+					</select>
+					<label for="pOrigin">Nacionalidad:</label>
+					<input type="text" id="pOrigin" />
+					<label for="pAge">Edad:</label>
+					<input type="number" id="pAge" />
+				</form>
+			</div>
+		</section>
+	</body>
+	<script src="./js/url.js"></script>
+	<script src="./js/table.js"></script>
+
+	<!-- TODO: Hay que sacar esto y hacer el fetch -->
+	<script>
+		const fetchAllPlayers = async () => {
+			try {
+				const response = await fetch("http://localhost:5000/api/players");
+				if (!response.ok) {
+					throw new Error("Error in response");
+				}
+				const data = await response.json();
+				return data;
+			} catch (e) {
+				console.error("Problema:", e);
+				throw error;
+			}
+		};
+
+		fetchAllPlayers().then((res) => {
+			res.forEach((e) => {
+				addRowToTable(e.pName, e.pType, e.pOrigin, e.Page, "player_table");
+			});
+		});
+	</script>
 </html>

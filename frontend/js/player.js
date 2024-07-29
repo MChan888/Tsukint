@@ -111,6 +111,13 @@ const createSkinForPlayer = async () => {
 		.catch((error) => console.error("Error:", error));
 };
 
+const addNewSkinToTable = async () => {
+	createSkinForPlayer().then(res => {
+		console.log(res)
+		addRowToTable(res.sName, res.wName , res.sMPrice, mapFloat(res.sFloat), "weapons_table")
+	})
+}
+
 // Function to display player information
 function displayPlayerInfo(playerInfo) {
 	const playerInfoDiv = document.getElementById("player_info");

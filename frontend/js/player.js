@@ -66,7 +66,8 @@ function fetchPlayerInfo(playerId) {
 	return players[playerId];
 }
 
-const createSkinForPlayer = async (id) => {
+const createSkinForPlayer = async () => {
+	const id = getPlayerIdFromUrl()
 	await fetch("http://localhost:5000/api/skins", {
 		method: "POST",
 		headers: {

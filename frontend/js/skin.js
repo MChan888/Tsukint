@@ -12,7 +12,7 @@ const createSkinmodel = async (name, type) => {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-			wName: name,
+			modelName: name,
 			wId: type,
 		}),
 	})
@@ -28,6 +28,7 @@ const test = () => {
 	if (!name || !type) {
 		return alert("No dejes los espacios en blanco!");
 	}
-
+	console.log(name)
+	console.log(type)
 	return createSkinmodel(name, type);
 };

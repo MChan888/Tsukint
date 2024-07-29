@@ -41,8 +41,28 @@ def create_app():
 
     @app.route('/api/player/<int:id>', methods=['POST'])
     def add_player(id):
+        player_data = request.get_json()
+
+        if not player_data or 'pName' not in player_data or 'pType' not in player_data or "pOrigin" not in player_data or "pAge" not in player_data:
+            return jsonify({"Error": "No deje campos sin llenar."}), 400
         
-        return
+        player = Player.query.get(player_data['pId'])
+
+        if not player:
+            return jsonify({"Error": "Persona no encontrada"}), 404
+        
+        new_player = Player(
+            pName=player_data['pName'],
+            pId=player_data['pId'],
+        )
+
+        db.session.add(new_skin_model)
+        db.session.commit()
+
+        return jsonify({
+            "modelName": new_skin_model.modelName,
+            "wId": new_skin_model.wId,
+        }), 201
 
     @app.route('/api/player/<int:id>', methods=["GET"])
     def get_players():
@@ -78,9 +98,9 @@ def create_app():
         if player:
             db.session.delete(player)
             db.session.commit()
-            return jsonify({f'Persona con ID igual a {id} eliminada.'}), 200
+            return jsonify({'Jugador eliminado.'}), 200
         else:
-            return jsonify({f'Error: no se ha encontrado a un jugador con ID {id}.'}), 404
+            return jsonify({'Error: no se ha encontrado al jugador seleccionado.'}), 404
 
     # ---------------------------SKIN MODELS-------------------------------------
     # Creates skin model
@@ -169,15 +189,7 @@ def create_app():
             return jsonify({"error": "Player not found"}), 404
             
         skins = Skin.query.filter_by(pId=pId).all()
-        skins_list = [{
-            "sId": skin.sId,
-            "sName": skin.sName, 
-            "wId": skin.wId, 
-            "sMPrice": skin.sMPrice, 
-            "sFloat": skin.sFloat, 
-            "pId": skin.pId, 
-            "wName": Weapon.query.get(skin.wId).wName
-        } for skin in skins]
+        skins_list = [{"sId": skin.sId, "sName": skin.sName, "wId": skin.wId, "sMPrice": skin.sMPrice, "sFloat": skin.sFloat, "pId": skin.pId} for skin in skins]
         return jsonify(skins_list)
 
     

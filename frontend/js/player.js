@@ -130,7 +130,7 @@ function displayPlayerInfo(playerInfo) {
 function displayPlayerWeaponSkins(playerInfo) {
 	console.log(playerInfo);
 	if (playerInfo) {
-		playerInfo.skins.forEach((element) => {
+		playerInfo.forEach((element) => {
 			addRowToTable(element.sName, element.wName , element.sMPrice, mapFloat(element.sFloat), "weapons_table");
 		});
 	}

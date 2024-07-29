@@ -15,7 +15,7 @@ def create_app():
     CORS(app)
 
     with app.app_context():
-        from models import Weapon, Skin, SkinModel
+        from models import Weapon, Skin, SkinModel, Player
         db.create_all()
 
         weapons = [
@@ -41,6 +41,7 @@ def create_app():
 
     @app.route('/api/player/<id>', methods=['POST'])
     def add_player(id):
+        
         return
 
     @app.route('/api/player/<id>', methods=['GET'])
@@ -48,7 +49,9 @@ def create_app():
         return
 
     @app.route('/api/player/<id>', methods=['PUT'])
-    def edit_player():
+    def edit_player(pId, name, type, origin, age):
+        # user = session.query()
+        
         return
 
     @app.route('/api/player/<id>', methods=['DELETE'])
@@ -82,10 +85,15 @@ def create_app():
             "wId": new_skin_model.wId,
         }), 201
 
-
+    #Gets all models
+    @app.route('/api/skins/model', methods=['GET'])
+    def get_skin_models():
+        skin_model = SkinModel.query.all()
+        weapons_list = [{"wId": skinmodel.wId, "modelName": skinmodel.modelName, "modelId": skinmodel.modelId} for skinmodel in skin_model]
+        return jsonify(weapons_list)
     
-    # ---------------------------SKIN MODELS-------------------------------------
-
+    # ---------------------------SKINS-------------------------------------
+    
     return app
 
 

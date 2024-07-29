@@ -23,6 +23,7 @@ class Skin(db.Model):
     wId = db.Column(db.Integer, db.ForeignKey('weapons.wId'))
     sMPrice = db.Column(db.Integer, nullable=False)
     sFloat = db.Column(db.Integer, nullable=False)
+    pId = db.Column(db.Integer, db.ForeignKey('players.pId'))
 
 class SkinModel(db.Model):
     __tablename__ = 'skinmodel'

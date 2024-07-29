@@ -162,16 +162,20 @@ const modifyPlayerInfo = async () => {
 };
 
 const deletePlayer = async () => {
+	const id = getPlayerIdFromUrl();
 	if (confirm("Estás seguro que queres borrar este jugador?")) {
 		await fetch("http://localhost:5000/api/player/" + id, {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
 			},
+		}).then(()=>{
+			window.location.assign("/")
 		}).catch((err) => {
 			console.error(err);
 			throw new Error("Error al editar el jugador");
 		});
+		
 	}
 };
 

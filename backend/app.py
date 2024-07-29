@@ -204,7 +204,17 @@ def create_app():
             return jsonify({"error": "Player not found"}), 404
             
         skins = Skin.query.filter_by(pId=pId).all()
-        skins_list = [{"sId": skin.sId, "sName": skin.sName, "wId": skin.wId, "sMPrice": skin.sMPrice, "sFloat": skin.sFloat, "pId": skin.pId} for skin in skins]
+        skins_list = [{
+            "sId": skin.sId, 
+            "sName": skin.sName,
+            "wId": skin.wId,
+            "sMPrice": skin.sMPrice, 
+            "sFloat": skin.sFloat, 
+            "pId": skin.pId,
+            "wName": Weapon.query.get(skin.wId).wName
+            }
+        for skin in skins]
+
         return jsonify(skins_list)
 
     

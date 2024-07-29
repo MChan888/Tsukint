@@ -66,6 +66,34 @@ function fetchPlayerInfo(playerId) {
 	return players[playerId];
 }
 
+const createSkinForPlayer = async (id) => {
+	await fetch("http://localhost:5000/api/skins", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			pId: id,
+		}),
+	})
+		.then((response) => response.json())
+		.then((data) => {
+			const element = document.getElementById("skin_generated");
+			if(data){
+				element.innerHTML = `
+					<h2>Felicidades!</h2>
+					<h4>Ganaste un:</h4>
+					<p>${data.sName+" "+data.wName}</p>
+					<p>en estado ${mapFloat(data.sFloat)}</p>
+				`
+			}
+			else {
+				element.innerHTML = `<p>No hay skins disponibles</p>`;
+			}
+		})
+		.catch((error) => console.error("Error:", error));
+};
+
 // Function to display player information
 function displayPlayerInfo(playerInfo) {
 	const playerInfoDiv = document.getElementById("player_info");

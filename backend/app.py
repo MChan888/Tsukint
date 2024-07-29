@@ -135,14 +135,20 @@ def create_app():
         randomSkinModelId = random.randint(1, len(randomSkinModels)-1)
 
         randomFloat = random.randint(1,5)
-
+        randomWeapon = randomSkinModels[randomSkinModelId].wId
+        
         new_skin = Skin(
             sName=randomSkinModels[randomSkinModelId].modelName,
-            wId=randomSkinModels[randomSkinModelId].wId,
+            wId=randomWeapon,
             pId=data['pId'],
             sFloat=randomFloat,
             sMPrice=randomFloat*1000
         )
+
+        weapon = Weapon.query.get(randomWeapon)
+
+        if not weapon:
+            return jsonify({"error": "Weapon not found"}), 404
 
         db.session.add(new_skin)
         db.session.commit()
@@ -153,6 +159,7 @@ def create_app():
             "pId": new_skin.pId,
             "sFloat": new_skin.sFloat,
             "sMPrice": new_skin.sMPrice,
+            "wName": weapon.wName
         }), 201
     
     @app.route('/api/skins/<int:pId>', methods=['GET'])

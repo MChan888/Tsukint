@@ -1,56 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../styles/main.css" />
-    <link rel="stylesheet" href="../styles/root.css" />
-    <link rel="stylesheet" href="../styles/form.css" />
-    <link rel="stylesheet" href="../styles/table.css" />
-    <link rel="stylesheet" href="../styles/player.css" />
-    <title>Player Info</title>
-  </head>
-  <body>
-    <header>
-      <div class="header_container">
-        <img
-          src="../assets/pumba_thumbnail.png"
-          alt="Logo de la pagina"
-          id="logo"
-        />
-        <h1>Pumba Skins</h1>
-      </div>
-      <nav class="navbar">
-        <ul>
-          <a href="/">
-            <li>Inicio</li>
-          </a>
-          <a href="/weapons">
-            <li>Armas</li>
-          </a>
-          <a href="/skins/">
-            <li>Skins</li>
-          </a>
-        </ul>
-      </nav>
-    </header>
-    <section class="container">
-      <div class="box">
-        <div id="player_info">
-          <p>Loading player information...</p>
-        </div>
-      </div>
-      <div class="box">
-        <table id="weapons_table">
-          <tr>
-            <th>Skin</th>
-            <th>Arma</th>
-            <th>Precio Mercado</th>
-            <th>Desgaste</th>
-          </tr>
-        </table>
-      </div>
-    </section>
-  </body>
-  <script src="../js/player.js"></script>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="../styles/main.css" />
+		<link rel="stylesheet" href="../styles/root.css" />
+		<link rel="stylesheet" href="../styles/form.css" />
+		<link rel="stylesheet" href="../styles/table.css" />
+		<link rel="stylesheet" href="../styles/player.css" />
+		<title>Player Info</title>
+	</head>
+	<body>
+		<header>
+			<div class="header_container">
+				<img src="../assets/pumba_thumbnail.png" alt="Logo de la pagina" id="logo" />
+				<h1>Pumba Skins</h1>
+			</div>
+			<nav class="navbar">
+				<ul>
+					<a href="/">
+						<li>Inicio</li>
+					</a>
+					<a href="/weapons">
+						<li>Armas</li>
+					</a>
+					<a href="/skins/">
+						<li>Skins</li>
+					</a>
+				</ul>
+			</nav>
+		</header>
+		<section class="container">
+			<div class="box">
+				<div id="player_info">
+					<p>Loading player information...</p>
+				</div>
+			</div>
+			<div class="box">
+				<table id="weapons_table">
+					<tr>
+						<th>Skin</th>
+						<th>Arma</th>
+						<th>Precio Mercado</th>
+						<th>Desgaste</th>
+					</tr>
+				</table>
+			</div>
+			<div class="box">
+				<h2>Generar skin aleatorio!</h2>
+				<br />
+				<div id="skin_generated"></div>
+				<br />
+				<button class="generate_skin_button"><h3>Generar</h3></button>
+			</div>
+		</section>
+	</body>
+	<script src="../js/player.js"></script>
 </html>

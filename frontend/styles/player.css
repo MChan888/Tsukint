@@ -2,3 +2,16 @@
     width: 100%;
     padding-left: 4vw;
 }
+
+.generate_skin_button{
+    height: 50px;
+    width: 10vw;
+    border: 0;
+    background-color: #B5590C;
+}   
+
+.generate_skin_button:hover {
+    cursor: pointer;
+    background-color: #974a0a;
+    transition-duration: 0.3s;
+}

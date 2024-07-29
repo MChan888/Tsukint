@@ -21,7 +21,7 @@ const createSkinmodel = async (name, type) => {
 		.catch((error) => console.error("Error:", error));
 };
 
-const test = () => {
+const submitCreateSkinModel = () => {
 	const name = document.getElementById("wName").value;
 	const type = document.getElementById("wType").value;
 

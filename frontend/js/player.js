@@ -107,6 +107,7 @@ const createSkinForPlayer = async () => {
 			else {
 				element.innerHTML = `<p>No hay skins disponibles</p>`;
 			}
+			return data;
 		})
 		.catch((error) => console.error("Error:", error));
 };

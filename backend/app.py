@@ -39,14 +39,12 @@ def create_app():
         weapons_list = [{"wId": weapon.wId, "wName": weapon.wName, "wType": weapon.wType, "wPrice": weapon.wPrice, "wOrigin": weapon.wOrigin} for weapon in weapons]
         return jsonify(weapons_list)
 
-    @app.route('/api/player/', methods=['POST'])
+    @app.route('/api/player', methods=['POST'])
     def add_player():
         player_data = request.get_json()
 
         if not player_data or 'pName' not in player_data or 'pType' not in player_data or "pOrigin" not in player_data or "pAge" not in player_data:
             return jsonify({"Error": "No deje campos sin llenar."}), 400
-        
-        player = Player.query.get(player_data['pId'])
         
         new_player = Player(
             pName=player_data['pName'],

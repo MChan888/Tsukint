@@ -3,18 +3,18 @@ function getPlayerIdFromUrl() {
 	return searchParams.get("id");
 }
 
-function mapFloat(float){
-	switch(float){
+function mapFloat(float) {
+	switch (float) {
 		case 1:
-			return "Deplorable"
+			return "Deplorable";
 		case 2:
-			return "Bastante Desgastado"
+			return "Bastante Desgastado";
 		case 4:
-			return "Casi Nuevo"
+			return "Casi Nuevo";
 		case 5:
-			return "Recién Fabricado"
+			return "Recién Fabricado";
 		default:
-			return "Algo Desgastado"
+			return "Algo Desgastado";
 	}
 }
 
@@ -38,7 +38,6 @@ function fetchPlayerMockInfo(playerId) {
 	// For demonstration, we'll use a placeholder player data
 	// In a real-world scenario, you would fetch this data from a server
 
-
 	const weapons = [
 		{ wName: "AWP", wType: "scopedRifle", wPrice: 4750, wOrigin: "UK", pId: 1 },
 		{ wName: "M4A4", wType: "rifle", wPrice: 3100, wOrigin: "US", pId: 2 },
@@ -51,24 +50,24 @@ function fetchPlayerMockInfo(playerId) {
 		{ sName: "Asiimov", sType: "rifle", sMPrice: 3100, sFloat: 5, pId: 1, ...weapons[3] },
 	];
 	const skins2 = [
-		{ sName: "Neon Revolution", sType: "rifle", sMPrice: 25.99 , sFloat: 3, pId: 2, ...weapons[3] },
+		{ sName: "Neon Revolution", sType: "rifle", sMPrice: 25.99, sFloat: 3, pId: 2, ...weapons[3] },
 		{ sName: "Neo Noir", sType: "sniper", sMPrice: 99.99, sFloat: 2, pId: 2, ...weapons[1] },
 	];
 	const skins3 = [];
 
 	const players = {
-		1: { pName: "ElChancho", pAge: 25, pOrigin: "Taiwan", pType: "Antiterrorista", skins: skins1 },
-		2: { pName: "ElGusanito", pAge: 25, pOrigin: "Argentina", pType: "Terrorista", skins: skins2 },
-		3: { pName: "ElQuique", pAge: 24, pOrigin: "Perú", pType: "Terrorista", skins: skins3 },
+		1: { pName: "ElChancho", pAge: 25, pOrigin: "Taiwan", pType: "ct", skins: skins1 },
+		2: { pName: "ElGusanito", pAge: 25, pOrigin: "Argentina", pType: "tt", skins: skins2 },
+		3: { pName: "ElQuique", pAge: 24, pOrigin: "Perú", pType: "tt", skins: skins3 },
 	};
 
 	return players[playerId];
 }
 
 const fetchPlayerSkinsInfo = async () => {
-	const id = getPlayerIdFromUrl()
+	const id = getPlayerIdFromUrl();
 	try {
-		const response = await fetch("http://localhost:5000/api/skins/"+id);
+		const response = await fetch("http://localhost:5000/api/skins/" + id);
 		if (!response.ok) {
 			throw new Error("Error in response");
 		}
@@ -78,16 +77,14 @@ const fetchPlayerSkinsInfo = async () => {
 		console.error("Problema:", e);
 		throw error;
 	}
-}
-
-
+};
 
 const createSkinForPlayer = async () => {
-	const id = getPlayerIdFromUrl()
+	const id = getPlayerIdFromUrl();
 	const response = await fetch("http://localhost:5000/api/skins", {
 		method: "POST",
 		headers: {
-			"Content-Type": "application/json"
+			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
 			pId: id,
@@ -96,40 +93,49 @@ const createSkinForPlayer = async () => {
 		.then((response) => response.json())
 		.then((data) => {
 			const element = document.getElementById("skin_generated");
-			if(data){
+			if (data) {
 				element.innerHTML = `
 					<h2>Felicidades!</h2>
 					<h4>Ganaste un:</h4>
-					<p>${data.sName+" "+data.wName}</p>
+					<p>${data.sName + " " + data.wName}</p>
 					<p>en estado ${mapFloat(data.sFloat)}</p>
-				`
+				`;
 				return data;
-			}
-			else {
+			} else {
 				element.innerHTML = `<p>No hay skins disponibles</p>`;
 			}
 		})
 		.catch((error) => console.error("Error:", error));
-		
-		return response;
+
+	return response;
 };
 
 const addNewSkinToTable = async () => {
-	createSkinForPlayer().then(res => {
-		console.log(res)
-		addRowToTable(res.sName, res.wName , res.sMPrice, mapFloat(res.sFloat), "weapons_table")
-	})
-}
+	createSkinForPlayer().then((res) => {
+		console.log(res);
+		addRowToTable(res.sName, res.wName, res.sMPrice, mapFloat(res.sFloat), "weapons_table");
+	});
+};
 
 // Function to display player information
 function displayPlayerInfo(playerInfo) {
-	const playerInfoDiv = document.getElementById("player_info");
+	const playerInfoDiv = document.getElementById("edit_player");
+	const isCt = playerInfo.pType === "ct" ? "selected" : "";
 	if (playerInfo) {
 		playerInfoDiv.innerHTML = `
-            <p>Nombre: ${playerInfo.pName}</p>
-            <p>Bando: ${playerInfo.pType}</p>
-            <p>Nacionalidad: ${playerInfo.pOrigin}</p>
-            <p>Edad: ${playerInfo.pAge}</p>
+			<label for="pName">Nombre del jugador:</label>
+			<input type="text" id="pName" value=${playerInfo.pName} />
+			<label for="pType">Bando:</label>
+			<select name="pType" id="pType">
+				<option value="tt">Terrorista</option>
+				<option value="ct" ${isCt}>Anti Terrorista</option>
+			</select>
+			<label for="pOrigin">Nacionalidad:</label>
+			<input type="text" id="pOrigin" value=${playerInfo.pOrigin} />
+			<label for="pAge">Edad:</label>
+			<input type="number" id="pAge" value=${playerInfo.pAge} />
+			<br>
+			<button onclick="modifyPlayerInfo()" class="generate_skin_button"><h3>Guardar cambios</h3></button>
         `;
 	} else {
 		playerInfoDiv.innerHTML = `<p>No se encuentra el jugador</p>`;
@@ -141,16 +147,42 @@ function displayPlayerWeaponSkins(playerInfo) {
 	console.log(playerInfo);
 	if (playerInfo) {
 		playerInfo.forEach((element) => {
-			addRowToTable(element.sName, element.wName , element.sMPrice, mapFloat(element.sFloat), "weapons_table");
+			addRowToTable(element.sName, element.wName, element.sMPrice, mapFloat(element.sFloat), "weapons_table");
 		});
 	}
 }
 
+const modifyPlayerInfo = async () => {
+	const id = getPlayerIdFromUrl()
+	const pName = document.getElementById("pName");
+	const pType = document.getElementById("pType");
+	const pOrigin = document.getElementById("pOrigin");
+	const pAge = document.getElementById("pAge");
+
+	await fetch('/api/player/'+id, {
+		method: 'PUT',
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			pName: pName,
+			pType: pType,
+			pOrigin: pOrigin,
+			pAge: pAge
+		}),
+	}).catch(err =>{
+		console.error(err);
+		throw new Error("Error al editar el jugador");
+	})
+};
+
 // Main execution
 const playerId = getPlayerIdFromUrl();
 const playerInfo = fetchPlayerMockInfo(playerId);
-fetchPlayerSkinsInfo().then(res=>displayPlayerWeaponSkins(res)).catch(e => {
-	console.error(e);
-	throw new Error("ERROR EN EL FETCH DE SKINS")
-});
+fetchPlayerSkinsInfo()
+	.then((res) => displayPlayerWeaponSkins(res))
+	.catch((e) => {
+		console.error(e);
+		throw new Error("ERROR EN EL FETCH DE SKINS");
+	});
 displayPlayerInfo(playerInfo);

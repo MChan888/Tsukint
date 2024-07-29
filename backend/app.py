@@ -44,17 +44,32 @@ def create_app():
         
         return
 
-    @app.route('/api/player/<int:id>', methods=['GET'])
+    @app.route('/api/player/<int:id>', methods=["GET"])
     def get_players():
         players = Player.query.all()
         player_list = [{"pId": player.pId, "pName": player.pName, "pType": player.pType, "pOrigin":player.pOrigin, "pAge":player.pAge} for player in players]
         return jsonify(player_list)
 
-    @app.route('/api/player/<int:id>', methods=['PUT'])
-    def edit_player(pId, name, type, origin, age):
-        # user = session.query()
+    @app.route('/api/player/<int:id>', methods=["PUT"])
+    def edit_player(id):
+        player_data = request.get_json()
         
-        return
+        if not player_data or "pName" not in player_data or "pType" not in player_data or "pOrigin" not in player_data or "pAge" not in player_data:
+            return jsonify({"Error": "No deje campos vacíos"}), 400
+        
+        person = Player.query.get(id)
+            
+        if person:
+            person.pName = player_data["pName"]
+            person.pType = player_data["pType"]
+            person.pOrigin = player_data["pOrigin"]
+            person.pAge = player_data["pAge"]
+            
+            db.session.commit()
+            return jsonify({"Mensaje": "La información del jugador ha sido actualizada"}), 200
+        else:
+            return jsonify({"Mensaje": "No se ha encontrado ningún jugador"}), 404
+
 
     @app.route('/api/player/<int:id>', methods=['DELETE'])
     def delete_player(id):

@@ -6,7 +6,7 @@ const changeSkinBoxView = () => {
 };
 
 const createSkinmodel = async (name, type) => {
-	await fetch("/api/skins/model", {
+	await fetch("http://localhost:5000/api/skins/model", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

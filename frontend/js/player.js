@@ -103,11 +103,11 @@ const createSkinForPlayer = async () => {
 					<p>${data.sName+" "+data.wName}</p>
 					<p>en estado ${mapFloat(data.sFloat)}</p>
 				`
+				return data;
 			}
 			else {
 				element.innerHTML = `<p>No hay skins disponibles</p>`;
 			}
-			return data;
 		})
 		.catch((error) => console.error("Error:", error));
 };

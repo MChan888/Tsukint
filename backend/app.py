@@ -39,24 +39,33 @@ def create_app():
         weapons_list = [{"wId": weapon.wId, "wName": weapon.wName, "wType": weapon.wType, "wPrice": weapon.wPrice, "wOrigin": weapon.wOrigin} for weapon in weapons]
         return jsonify(weapons_list)
 
-    @app.route('/api/player/<id>', methods=['POST'])
+    @app.route('/api/player/<int:id>', methods=['POST'])
     def add_player(id):
         
         return
 
-    @app.route('/api/player/<id>', methods=['GET'])
-    def show_players():
-        return
+    @app.route('/api/player/<int:id>', methods=['GET'])
+    def get_players():
+        players = Player.query.all()
+        player_list = [{"pId": player.pId, "pName": player.pName, "pType": player.pType, "pOrigin":player.pOrigin, "pAge":player.pAge} for player in players]
+        return jsonify(player_list)
 
-    @app.route('/api/player/<id>', methods=['PUT'])
+    @app.route('/api/player/<int:id>', methods=['PUT'])
     def edit_player(pId, name, type, origin, age):
         # user = session.query()
         
         return
 
-    @app.route('/api/player/<id>', methods=['DELETE'])
-    def delete_player():
-        return
+    @app.route('/api/player/<int:id>', methods=['DELETE'])
+    def delete_player(id):
+        player = Player.query.get(id)
+        
+        if player:
+            db.session.delete(player)
+            db.session.commit()
+            return jsonify({f'Persona con ID igual a {id} eliminada.'}), 200
+        else:
+            return jsonify({f'Error: no se ha encontrado a un jugador con ID {id}.'}), 404
 
     # ---------------------------SKIN MODELS-------------------------------------
     # Creates skin model
@@ -93,7 +102,7 @@ def create_app():
         return jsonify(weapons_list)
     
     # ---------------------------SKINS-------------------------------------
-    
+
     @app.route('/api/skins', methods=['POST'])
     def create_skin():
         data = request.get_json()
@@ -108,7 +117,7 @@ def create_app():
             return jsonify({"error": "Player not found"}), 404
         
         randomSkinModels = SkinModel.query.all()
-        randomSkinModelId = random.randint(1, len(randomSkinModels))
+        randomSkinModelId = random.randint(1, len(randomSkinModels)-1)
 
         randomFloat = random.randint(1,5)
 
@@ -130,6 +139,18 @@ def create_app():
             "sFloat": new_skin.sFloat,
             "sMPrice": new_skin.sMPrice,
         }), 201
+    
+    @app.route('/api/skins/<int:pId>', methods=['GET'])
+    def get_player_skins(pId):
+        player = Player.query.get(pId)
+        if not player:
+            return jsonify({"error": "Player not found"}), 404
+            
+        skins = Skin.query.filter_by(pId=pId).all()
+        skins_list = [{"sId": skin.sId, "sName": skin.sName, "wId": skin.wId, "sMPrice": skin.sMPrice, "sFloat": skin.sFloat, "pId": skin.pId} for skin in skins]
+        return jsonify(skins_list)
+
+    
     return app
 
 

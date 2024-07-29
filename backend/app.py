@@ -94,6 +94,42 @@ def create_app():
     
     # ---------------------------SKINS-------------------------------------
     
+    @app.route('/api/skins', methods=['POST'])
+    def create_skin():
+        data = request.get_json()
+
+        if not data or 'pId' not in data:
+            return jsonify({"error": "Invalid input"}), 400
+        
+
+        player = Player.query.get(data['pId'])
+
+        if not player:
+            return jsonify({"error": "Player not found"}), 404
+        
+        randomSkinModels = SkinModel.query.all()
+        randomSkinModelId = random.randint(1, len(randomSkinModels))
+
+        randomFloat = random.randint(1,5)
+
+        new_skin = Skin(
+            sName=randomSkinModels[randomSkinModelId].modelName,
+            wId=randomSkinModels[randomSkinModelId].wId,
+            pId=data['pId'],
+            sFloat=randomFloat,
+            sMPrice=randomFloat*1000
+        )
+
+        db.session.add(new_skin)
+        db.session.commit()
+
+        return jsonify({
+            "sName": new_skin.sName,
+            "wId": new_skin.wId,
+            "pId": new_skin.pId,
+            "sFloat": new_skin.sFloat,
+            "sMPrice": new_skin.sMPrice,
+        }), 201
     return app
 
 

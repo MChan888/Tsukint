@@ -15,3 +15,16 @@
     background-color: #974a0a;
     transition-duration: 0.3s;
 }
+
+.delete_button {
+    height: 50px;
+    width: 10vw;
+    border: 0;
+    background-color: #A3201A;
+}
+
+.delete_button:hover {
+    cursor: pointer;
+    background-color: #741712;
+    transition-duration: 0.3s;
+}

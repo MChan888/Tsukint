@@ -161,6 +161,20 @@ const modifyPlayerInfo = async () => {
 	});
 };
 
+const deletePlayer = async () => {
+	if (confirm("Estás seguro que queres borrar este jugador?")) {
+		await fetch("http://localhost:5000/api/player/" + id, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}).catch((err) => {
+			console.error(err);
+			throw new Error("Error al editar el jugador");
+		});
+	}
+};
+
 // Main execution
 const playerId = getPlayerIdFromUrl();
 fetchPlayerSkinsInfo()

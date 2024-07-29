@@ -66,9 +66,17 @@
 
 	<!-- TODO: Hay que sacar esto y hacer el fetch -->
 	<script>
+		const mapper = (pType) => {
+			switch(pType){
+				case "tt":
+					return "Terrorista"
+				default:
+					return "Antiterrorista"
+			}
+		}
 		const fetchAllPlayers = async () => {
 			try {
-				const response = await fetch("http://localhost:5000/api/players");
+				const response = await fetch("http://localhost:5000/api/player");
 				if (!response.ok) {
 					throw new Error("Error in response");
 				}
@@ -82,7 +90,7 @@
 
 		fetchAllPlayers().then((res) => {
 			res.forEach((e) => {
-				addRowToTable(e.pName, e.pType, e.pOrigin, e.Page, "player_table");
+				addRowToTable(e.pName,mapper(e.pType) , e.pOrigin, e.pAge, generatePlayerUrl(e.pId));
 			});
 		});
 	</script>

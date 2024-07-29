@@ -159,16 +159,16 @@ const modifyPlayerInfo = async () => {
 	const pOrigin = document.getElementById("pOrigin");
 	const pAge = document.getElementById("pAge");
 
-	await fetch('/api/player/'+id, {
+	await fetch('http://localhost:5000/api/player/'+id, {
 		method: 'PUT',
 		headers: {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-			pName: pName,
-			pType: pType,
-			pOrigin: pOrigin,
-			pAge: pAge
+			pName: pName.value,
+			pType: pType.value,
+			pOrigin: pOrigin.value,
+			pAge: pAge.value
 		}),
 	}).catch(err =>{
 		console.error(err);

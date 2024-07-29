@@ -53,6 +53,7 @@ const fetchPlayerSkinsInfo = async () => {
 	const id = getPlayerIdFromUrl();
 	try {
 		const response = await fetch("http://localhost:5000/api/skins/" + id);
+		console.log(response)
 		if (!response.ok) {
 			throw new Error("Error in response");
 		}
@@ -120,7 +121,7 @@ function displayPlayerInfo(playerInfo) {
 			<label for="pAge">Edad:</label>
 			<input type="number" id="pAge" value=${playerInfo.pAge} />
 			<br>
-			<button onclick="modifyPlayerInfo()" class="generate_skin_button"><h3>Guardar cambios</h3></button>
+			<button onclick="modifyPlayerInfo()" class="generate_skin_button" style="margin-top: 25px;"><h3>Guardar cambios</h3></button>
         `;
 	} else {
 		playerInfoDiv.innerHTML = `<p>No se encuentra el jugador</p>`;
@@ -155,7 +156,10 @@ const modifyPlayerInfo = async () => {
 			pOrigin: pOrigin.value,
 			pAge: pAge.value,
 		}),
-	}).catch((err) => {
+	}).then(()=>{
+		window.location.replace("/")
+	})
+	.catch((err) => {
 		console.error(err);
 		throw new Error("Error al editar el jugador");
 	});

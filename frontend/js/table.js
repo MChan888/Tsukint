@@ -3,7 +3,6 @@ function generatePlayerUrl(id) {
 }
 
 function addRowToTable(name, type, origin, age, url) {
-	console.log("BEPP");
 	var table = document.getElementById("player_table");
 
 	var newRow = table.insertRow();

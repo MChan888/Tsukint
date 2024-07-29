@@ -16,8 +16,7 @@ const createSkinmodel = async (name, type) => {
 			wId: type,
 		}),
 	})
-		.then((response) => response.json())
-		.then((data) => console.log(data))
+		.then(() => window.location.assign("/"))
 		.catch((error) => console.error("Error:", error));
 };
 
@@ -28,7 +27,5 @@ const submitCreateSkinModel = () => {
 	if (!name || !type) {
 		return alert("No dejes los espacios en blanco!");
 	}
-	console.log(name)
-	console.log(type)
 	return createSkinmodel(name, type);
 };

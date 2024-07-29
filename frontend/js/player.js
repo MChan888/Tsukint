@@ -139,6 +139,8 @@ function displayPlayerWeaponSkins(playerInfo) {
 // Main execution
 const playerId = getPlayerIdFromUrl();
 const playerInfo = fetchPlayerMockInfo(playerId);
-const playerSkins = fetchPlayerSkinsInfo();
+fetchPlayerSkinsInfo().then(res=>displayPlayerWeaponSkins(res)).catch(e => {
+	console.error(e);
+	throw new Error("ERROR EN EL FETCH DE SKINS")
+});
 displayPlayerInfo(playerInfo);
-displayPlayerWeaponSkins(playerSkins);

@@ -45,53 +45,24 @@
 			</div>
 			<div class="box">
 				<h2>Agregar un jugador</h2>
-				<form class="form_player">
-					<label for="pName">Nombre del jugador:</label>
-					<input type="text" id="pName" />
-					<label for="pType">Bando:</label>
-					<select name="pType">
-						<option value="tt">Terrorista</option>
-						<option value="ct">Anti Terrorista</option>
-					</select>
-					<label for="pOrigin">Nacionalidad:</label>
-					<input type="text" id="pOrigin" />
-					<label for="pAge">Edad:</label>
-					<input type="number" id="pAge" />
-				</form>
+				<br>
+				<label for="pName">Nombre del jugador:</label>
+				<input type="text" id="pName" />
+				<label for="pType">Bando:</label>
+				<select name="pType">
+					<option value="tt">Terrorista</option>
+					<option value="ct">Anti Terrorista</option>
+				</select>
+				<label for="pOrigin">Nacionalidad:</label>
+				<input type="text" id="pOrigin" />
+				<label for="pAge">Edad:</label>
+				<input type="number" id="pAge" />
+				<br>
+				<button class="create_button" onclick="createPlayer()"><h3>Crear</h3></button>
 			</div>
 		</section>
 	</body>
 	<script src="./js/url.js"></script>
 	<script src="./js/table.js"></script>
-
-	<!-- TODO: Hay que sacar esto y hacer el fetch -->
-	<script>
-		const mapper = (pType) => {
-			switch(pType){
-				case "tt":
-					return "Terrorista"
-				default:
-					return "Antiterrorista"
-			}
-		}
-		const fetchAllPlayers = async () => {
-			try {
-				const response = await fetch("http://localhost:5000/api/player");
-				if (!response.ok) {
-					throw new Error("Error in response");
-				}
-				const data = await response.json();
-				return data;
-			} catch (e) {
-				console.error("Problema:", e);
-				throw error;
-			}
-		};
-
-		fetchAllPlayers().then((res) => {
-			res.forEach((e) => {
-				addRowToTable(e.pName,mapper(e.pType) , e.pOrigin, e.pAge, generatePlayerUrl(e.pId));
-			});
-		});
-	</script>
+	<script src="./js/main.js"></script>
 </html>

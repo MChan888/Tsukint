@@ -84,7 +84,7 @@ const fetchPlayerSkinsInfo = async () => {
 
 const createSkinForPlayer = async () => {
 	const id = getPlayerIdFromUrl()
-	await fetch("http://localhost:5000/api/skins", {
+	const response = await fetch("http://localhost:5000/api/skins", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -110,6 +110,8 @@ const createSkinForPlayer = async () => {
 			}
 		})
 		.catch((error) => console.error("Error:", error));
+		
+		return response;
 };
 
 const addNewSkinToTable = async () => {
